@@ -7,6 +7,7 @@ public class MapInfo : MonoBehaviour
 {
     public static int[,] mapInfo;
     public static int[,] rotation;
+    public static int[,] hole;
     public static Vector2Int mapSize;
     public static Vector3[,] slopePositionBias = new Vector3[4, 2]
     {

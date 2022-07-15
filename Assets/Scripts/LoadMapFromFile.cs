@@ -36,6 +36,7 @@ public class LoadMapFromFile : MonoBehaviour
         MapInfo.mapSize = size;
         MapInfo.mapInfo = new int[size.y, size.x];
         MapInfo.rotation = new int[size.y, size.x];
+        MapInfo.hole = new int[size.y, size.x];
         for (int i = 0; i < size.y; i++)
         {
             for (int j = 0; j < size.x; j++)
