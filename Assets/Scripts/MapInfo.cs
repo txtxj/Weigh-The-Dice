@@ -5,10 +5,23 @@ using UnityEngine;
 
 public class MapInfo : MonoBehaviour
 {
-    [HideInInspector]
     public static int[,] mapInfo;
-    [HideInInspector]
+    public static int[,] rotation;
     public static Vector2Int mapSize;
+    public static Vector3[,] slopePositionBias = new Vector3[4, 2]
+    {
+        {new Vector3(-0.3f, 0f, 0f), new Vector3(-0.5f, -0.1f, 0f)},
+        {new Vector3(0.3f, 0f, 0f), new Vector3(0.5f, -0.1f, 0f)},
+        {new Vector3(0f, 0f, 0.3f), new Vector3(0f, -0.1f, 0.5f)},
+        {new Vector3(0f, 0f, -0.3f), new Vector3(0f, -0.1f, -0.5f)}
+    };
+    public static Quaternion[,] slopeRotationBias = new Quaternion[4, 2]
+    {
+        {Quaternion.Euler(0f, 0f, 15f), Quaternion.Euler(0f, 0f, 30f)},
+        {Quaternion.Euler(0f, 0f, -15f), Quaternion.Euler(0f, 0f, -30f)},
+        {Quaternion.Euler(15f, 0f, 0f), Quaternion.Euler(30f, 0f, 0f)},
+        {Quaternion.Euler(-15f, 0f, 0f), Quaternion.Euler(-30f, 0f, 0f)},
+    };
 
     public static int GetHeight(int i, int j)
     {
@@ -74,17 +87,52 @@ public class MapInfo : MonoBehaviour
     public static Vector3 GetPosition(int i, int j)
     {
         float h = 0f;
+        Vector3 pos = Vector3.zero;
         if (IsSlope(i, j))
         {
             int code = GetSlopeCode(i, j);
-            if (code == 2) h = 1.5f;
-            else if (code == 3) h = 2f;
-            else if (code == 6) h = 2.5f;
+            if (code == 2)
+            {
+                h = 1.5f;
+                pos = slopePositionBias[rotation[i, j], 0];
+            }
+            else if (code == 3)
+            {
+                h = 2f;
+                pos = slopePositionBias[rotation[i, j], 1];
+            }
+            else if (code == 6)
+            {
+                h = 2.5f;
+                pos = slopePositionBias[rotation[i, j], 0];
+            }
         }
         else
         {
             h = GetHeight(i, j);
         }
-        return new Vector3(i * 2f, 1.5f + h * 0.5f, j * 2f);
+        return new Vector3(i * 2f, 1.5f + h * 0.5f, j * 2f) + pos;
+    }
+
+    public static Quaternion GetRotation(int i, int j)
+    {
+        Quaternion q = Quaternion.identity;
+        if (IsSlope(i, j))
+        {
+            int code = GetSlopeCode(i, j);
+            if (code == 2)
+            {
+                q = slopeRotationBias[rotation[i, j], 0];
+            }
+            else if (code == 3)
+            {
+                q = slopeRotationBias[rotation[i, j], 1];
+            }
+            else if (code == 6)
+            {
+                q = slopeRotationBias[rotation[i, j], 0];
+            }
+        }
+        return q;
     }
 }

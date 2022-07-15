@@ -32,6 +32,7 @@ public class DiceMove : MonoBehaviour
                     break;
             }
             transform.position = MapInfo.GetPosition(pos.x, pos.y);
+            transform.rotation = MapInfo.GetRotation(pos.x, pos.y);
         }
     }
 
