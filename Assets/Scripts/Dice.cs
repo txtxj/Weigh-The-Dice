@@ -161,10 +161,21 @@ public class Dice : MonoBehaviour
         }
     }
 
+    public void Victory()
+    {
+        if (isLocalPlayer)
+        {
+            EventHandler.Victory();
+        }
+    }
+
     public void GameOver()
     {
         dieAnimFlag += 1;
-        EventHandler.GameOver();
+        if (isLocalPlayer)
+        {
+            EventHandler.GameOver();
+        }
     }
 
     public void Drown()

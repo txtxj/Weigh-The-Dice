@@ -12,7 +12,7 @@ public class EventHandler : MonoBehaviour
         dieMenu.SetActive(true);
     }
     
-    private static void Victory()
+    public static void Victory()
     {
         winMenu.SetActive(true);
     }
@@ -26,7 +26,7 @@ public class EventHandler : MonoBehaviour
 
         if (MapInfo.IsTarget(dice.pos.x, dice.pos.y))
         {
-            Victory();
+            dice.Victory();
             return;
         }
 
