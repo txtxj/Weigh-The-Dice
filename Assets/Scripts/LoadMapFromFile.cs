@@ -27,26 +27,36 @@ public class LoadMapFromFile : MonoBehaviour
                 q = Quaternion.Euler(0f, 270f, 0f);
                 break;
         }
-        Instantiate(gameAsserts[index], new Vector3(x, 0f, y) * 2, q, transform);
+        MapInfo.tiles[x, y] = Instantiate(gameAsserts[index], new Vector3(x, 0f, y) * 2, q, transform);
     }
 
     private void BuildMap(byte[] s, byte[] r)
     {
-        Vector2Int size = new Vector2Int(s[0], s[1]);
+        Vector2Int size = new Vector2Int(s[1], s[0]);
+        MapInfo.target = new Vector2Int(r[0], r[1]);
         MapInfo.mapSize = size;
         MapInfo.mapInfo = new int[size.y, size.x];
         MapInfo.rotation = new int[size.y, size.x];
         MapInfo.hole = new int[size.y, size.x];
+        MapInfo.tiles = new GameObject[size.y, size.x];
         for (int i = 0; i < size.y; i++)
         {
             for (int j = 0; j < size.x; j++)
             {
                 int u = s[i * size.x + j + 2];
-                int v = r[i * size.x + j];
+                int v = r[i * size.x + j + 2];
                 if (u < assetsNumber)
                 {
                     MapInfo.mapInfo[i, j] = u;
                     MapInfo.rotation[i, j] = v;
+                    if (u == 0 || u == 3 || u == 6 || u == 9 || u == 11 || u == 13)
+                    {
+                        MapInfo.hole[i, j] = 1;
+                    }
+                    else
+                    {
+                        MapInfo.hole[i, j] = 0;
+                    }
                     CreateBlock(i, j, u, v);
                 }
                 else

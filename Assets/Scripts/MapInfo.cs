@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class MapInfo : MonoBehaviour
@@ -9,6 +10,8 @@ public class MapInfo : MonoBehaviour
     public static int[,] rotation;
     public static int[,] hole;
     public static Vector2Int mapSize;
+    public static Vector2Int target;
+    public static GameObject[,] tiles;
     public static Vector3[,] slopePositionBias = new Vector3[4, 2]
     {
         {new Vector3(-0.3f, 0f, 0f), new Vector3(-0.5f, -0.1f, 0f)},
@@ -32,6 +35,31 @@ public class MapInfo : MonoBehaviour
     public static bool IsSlope(int i, int j)
     {
         return mapInfo[i, j] >= 9 && mapInfo[i, j] < 15;
+    }
+
+    public static bool IsWater(int i, int j)
+    {
+        return (mapInfo[i, j] + 1) % 3 == 0;
+    }
+    
+    public static bool IsCrack(int i, int j)
+    {
+        return hole[i, j] == 1;
+    }
+    
+    public static bool IsHole(int i, int j)
+    {
+        return hole[i, j] == 2;
+    }
+
+    public static bool InSize(int i, int j)
+    {
+        return i >= 0 && j >= 0 && i < mapSize.y && j < mapSize.x;
+    }
+    
+    public static bool IsTarget(int i, int j)
+    {
+        return target.x == i && target.y == j;
     }
 
     public static int GetSlopeCode(int i, int j)
@@ -60,12 +88,24 @@ public class MapInfo : MonoBehaviour
                 d = Vector2Int.up;
                 break;
         }
+        if (!InSize(i + d.x, j + d.y))
+        {
+            return false;
+        }
+        if (IsHole(i + d.x, j + d.y))
+        {
+            return false;
+        }
         if (GetHeight(i, j) == GetHeight(i + d.x, j + d.y))
         {
             return true;
         }
         if (IsSlope(i, j))
         {
+            if (!InSize(i - d.x, j - d.y))
+            {
+                return false;
+            }
             int from = GetHeight(i - d.x, j - d.y);
             int to = GetHeight(i + d.x, j + d.y);
             if (from * to == GetSlopeCode(i, j))
@@ -135,5 +175,22 @@ public class MapInfo : MonoBehaviour
             }
         }
         return q;
+    }
+
+    public static void MakeCrack(int x, int y)
+    {
+        hole[x, y] = 1;
+        tiles[x, y].GetComponent<Renderer>().materials[1].SetColor("_Color", (Color)new Color32(0xda, 0xae, 0x7e, 0xff));
+    }
+
+    public static void DestoyTile(int x, int y)
+    {
+        hole[x, y] = 2;
+        Hashtable hash = new Hashtable();
+        hash.Add("position", tiles[x, y].transform.position + Vector3.down * 80f);
+        hash.Add("time", 2f);
+        hash.Add("easeType", "easeInQuad");
+        Destroy(tiles[x, y], 2f);
+        iTween.MoveTo(tiles[x, y], hash);
     }
 }

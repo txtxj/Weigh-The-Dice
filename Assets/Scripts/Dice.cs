@@ -6,22 +6,40 @@ using UnityEditor.VersionControl;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class DiceMove : MonoBehaviour
+public class Dice : MonoBehaviour
 {
     public Vector2Int pos;
     public float moveTime;
+
+    public int Number => faceNumber[0];
+    [HideInInspector]
+    public bool onWater = false;
+    [HideInInspector]
+    public bool onSlope = false;
+    [HideInInspector]
+    public bool onCrack = false;
+    [HideInInspector]
+    public bool onHole = false;
+    [HideInInspector]
+    public bool digFlag = false;
 
     private Vector3 rotate;
     private Quaternion lastRotate;
     private static int animFlag = 0;
     private bool finishRotate = true;
+    private int lastDir;
+    
 
-    public int[] faceNumber = new int[] { 2, 5, 1, 6, 3, 4 };
+    private int[] faceNumber = new int[] { 2, 5, 1, 6, 3, 4 };
 
     public void SignalFlag()
     {
         animFlag += 1;
         finishRotate = true;
+        if (animFlag >= 0)
+        {
+            EventHandler.Solve(this);
+        }
     }
 
     private void MoveAnimation(Vector3 position)
@@ -48,6 +66,7 @@ public class DiceMove : MonoBehaviour
     {
         if (MapInfo.Movable(pos.x, pos.y, dir))
         {
+            lastDir = dir;
             Vector3 rot = -MapInfo.GetRotation(pos.x, pos.y);
             switch (dir)
             {
@@ -75,7 +94,107 @@ public class DiceMove : MonoBehaviour
             MoveAnimation(MapInfo.GetPosition(pos.x, pos.y));
             rotate = MapInfo.GetRotation(pos.x, pos.y) + rot;
             finishRotate = false;
-            Debug.Log(faceNumber[0]);
+            Debug.Log(pos.x + ", " + pos.y);
+        }
+    }
+    
+    private void Move(int dir)
+    {
+        if (MapInfo.Movable(pos.x, pos.y, dir))
+        {
+            Vector3 rot = -MapInfo.GetRotation(pos.x, pos.y);
+            switch (dir)
+            {
+                case 0:
+                    pos += Vector2Int.left;
+                    break;
+                case 1:
+                    pos += Vector2Int.right;
+                    break;
+                case 2:
+                    pos += Vector2Int.down;
+                    break;
+                case 3:
+                    pos += Vector2Int.up;
+                    break;
+            }
+            MoveAnimation(MapInfo.GetPosition(pos.x, pos.y));
+            rotate = MapInfo.GetRotation(pos.x, pos.y) + rot;
+            finishRotate = false;
+            Debug.Log(pos.x + ", " + pos.y);
+        }
+    }
+    
+    public void DigHole(int type)
+    {
+        if (type == 0)
+        {
+            digFlag = true;
+        }
+        else if (type == 1)
+        {
+            MapInfo.MakeCrack(pos.x, pos.y);
+        }
+        else if (type == 2)
+        {
+            Vector2Int p = pos;
+            switch (lastDir)
+            {
+                case 0:
+                    p -= Vector2Int.left;
+                    break;
+                case 1:
+                    p -= Vector2Int.right;
+                    break;
+                case 2:
+                    p -= Vector2Int.down;
+                    break;
+                case 3:
+                    p -= Vector2Int.up;
+                    break;
+            }
+            MapInfo.DestoyTile(p.x, p.y);
+        }
+    }
+
+    public void Drown()
+    {
+        
+    }
+
+    public void FallDown()
+    {
+        
+    }
+
+    public void Landslide()
+    {
+        int x = 0;
+        int y = 0;
+        switch (lastDir)
+        {
+            case 0:
+                x = -1;
+                break;
+            case 1:
+                x = 1;
+                break;
+            case 2:
+                y = -1;
+                break;
+            case 3:
+                y = 1;
+                break;
+        }
+        int a = MapInfo.GetHeight(pos.x - x, pos.y - y);
+        int b = MapInfo.GetHeight(pos.x + x, pos.y + y);
+        if (a > b)
+        {
+            Move(lastDir);
+        }
+        else
+        {
+            Move(lastDir ^ 1);
         }
     }
 
@@ -94,10 +213,9 @@ public class DiceMove : MonoBehaviour
         }
         else if (animFlag < 0)
         {
-            finishRotate = true;
             transform.rotation = lastRotate * Quaternion.Inverse(lastRotate) * Quaternion.Euler(rotate) * lastRotate;
             lastRotate = transform.rotation;
-            animFlag += 1;
+            SignalFlag();
         }
     }
 
