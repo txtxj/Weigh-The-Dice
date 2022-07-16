@@ -22,10 +22,15 @@ public class Dice : MonoBehaviour
     public bool onHole = false;
     [HideInInspector]
     public bool digFlag = false;
+    [HideInInspector]
+    public float onWaterOffset = 0f;
+    [HideInInspector]
+    public bool isLocalPlayer = false;
 
     private Vector3 rotate;
     private Quaternion lastRotate;
     private static int animFlag = 0;
+    private static int solverFlag = 0;
     private static int dieAnimFlag = 0;
     private bool finishRotate = true;
     private int lastDir;
@@ -34,13 +39,20 @@ public class Dice : MonoBehaviour
 
     private int[] faceNumber = new int[] { 2, 5, 1, 6, 3, 4 };
 
+    public static void ResetFlag()
+    {
+        animFlag = solverFlag = dieAnimFlag = 0;
+    }
+
     public void SignalFlag()
     {
         animFlag += 1;
         finishRotate = true;
         if (animFlag >= 0)
         {
+            solverFlag -= 1;
             EventHandler.Solve(this);
+            solverFlag += 1;
         }
     }
 
@@ -173,6 +185,7 @@ public class Dice : MonoBehaviour
 
     public void FallDown()
     {
+        dieAnimFlag -= 1;
         Hashtable hash = new Hashtable();
         hash.Add("position", transform.position + Vector3.down * 80f);
         hash.Add("time", 2f);
@@ -225,17 +238,22 @@ public class Dice : MonoBehaviour
         {
             transform.Rotate(rotate * Time.deltaTime / moveTime, Space.World);
         }
-        else if (animFlag < 0)
+    }
+
+    private void Update()
+    {
+        if (finishRotate && animFlag < 0)
         {
             transform.rotation = lastRotate * Quaternion.Inverse(lastRotate) * Quaternion.Euler(rotate) * lastRotate;
             lastRotate = transform.rotation;
             SignalFlag();
         }
-    }
-
-    private void Update()
-    {
-        if (animFlag < 0 || dieAnimFlag < 0) return;
+        if (animFlag < 0 || dieAnimFlag < 0 || solverFlag < 0) return;
+        if (onWater)
+        {
+            transform.position = MapInfo.GetPosition(pos.x, pos.y) + new Vector3(0f, onWaterOffset, 0f);
+        }
+        if (!isLocalPlayer) return;
         float hr = Input.GetAxisRaw("Horizontal");
         float vr = Input.GetAxisRaw("Vertical");
 

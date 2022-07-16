@@ -43,6 +43,10 @@ public class LoadMapFromFile : MonoBehaviour
         {
             MapInfo.tiles[x, y].GetComponent<Renderer>().materials[1].SetColor("_Color", (Color)new Color32(0xff, 0x2c, 0x60, 0xff));
         }
+        else if (MapInfo.IsWater(x, y))
+        {
+            MapInfo.tiles[x, y].GetComponent<Renderer>().materials[0].SetColor("_Color", (Color)new Color32(0x64, 0xb4, 0xff, 0xff));
+        }
     }
 
     private void BuildMap(byte[] s, byte[] r)
@@ -50,6 +54,7 @@ public class LoadMapFromFile : MonoBehaviour
         size = new Vector2Int(s[1], s[0]);
         ori = new Vector2Int(s[2], s[3]);
         dice.GetComponent<Dice>().pos = ori;
+        dice.GetComponent<Dice>().isLocalPlayer = true;
         MapInfo.target = new Vector2Int(r[0], r[1]);
         MapInfo.mapSize = size;
         MapInfo.mapInfo = new int[size.y, size.x];
@@ -101,6 +106,7 @@ public class LoadMapFromFile : MonoBehaviour
         assetsNumber = gameAsserts.Length;
         EventHandler.winMenu = winMenu;
         EventHandler.dieMenu = dieMenu;
+        Dice.ResetFlag();
         GameObject levelTransfer = GameObject.Find("LevelObject");
         int level = 0;
         if (levelTransfer != null)
@@ -112,6 +118,7 @@ public class LoadMapFromFile : MonoBehaviour
         if (levelText == null)
         {
             SceneManager.LoadScene(0);
+            return;
         }
         BuildMap(levelText.bytes, rotateTex.bytes);
     }

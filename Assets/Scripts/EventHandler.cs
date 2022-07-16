@@ -41,12 +41,7 @@ public class EventHandler : MonoBehaviour
             dice.Drown();
             return;
         }
-
-        if (dice.Number > 3 && dice.onSlope)
-        {
-            dice.Landslide();
-        }
-
+        
         if (dice.Number >= 5 && dice.onCrack)
         {
             dice.DigHole(0);
@@ -55,6 +50,11 @@ public class EventHandler : MonoBehaviour
         if (dice.Number == 6 && !dice.onCrack)
         {
             dice.DigHole(1);
+        }
+
+        if (dice.Number > 3 && dice.onSlope)
+        {
+            dice.Landslide();
         }
     }
 }

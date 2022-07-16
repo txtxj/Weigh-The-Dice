@@ -17,7 +17,7 @@ public class LevelManager : MonoBehaviour
 		int row = 0;
 		int column = 0;
 		btManager = GameObject.Find("EventSystem").GetComponent<ButtonManager>();
-		for (int id = 0; id < levelCount; id++)
+		for (int id = 1; id <= levelCount; id++)
 		{
 			if (Resources.Load<TextAsset>("Levels/" + id + "/level") == null)
 			{

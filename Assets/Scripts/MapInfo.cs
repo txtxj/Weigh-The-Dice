@@ -39,7 +39,7 @@ public class MapInfo : MonoBehaviour
 
     public static bool IsWater(int i, int j)
     {
-        return (mapInfo[i, j] + 1) % 3 == 0;
+        return mapInfo[i, j] < 9 && (mapInfo[i, j] + 1) % 3 == 0;
     }
     
     public static bool IsCrack(int i, int j)
@@ -64,6 +64,7 @@ public class MapInfo : MonoBehaviour
 
     public static int GetSlopeCode(int i, int j)
     {
+        if (mapInfo[i, j] <= 8) return 0;
         if (mapInfo[i, j] <= 10) return 3;
         if (mapInfo[i, j] <= 12) return 2;
         if (mapInfo[i, j] <= 14) return 6;
