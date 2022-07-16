@@ -183,7 +183,7 @@ public class MapInfo : MonoBehaviour
         tiles[x, y].GetComponent<Renderer>().materials[1].SetColor("_Color", (Color)new Color32(0xda, 0xae, 0x7e, 0xff));
     }
 
-    public static void DestoyTile(int x, int y)
+    public static void DestroyTile(int x, int y)
     {
         hole[x, y] = 2;
         Hashtable hash = new Hashtable();

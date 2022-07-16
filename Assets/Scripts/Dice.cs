@@ -28,6 +28,7 @@ public class Dice : MonoBehaviour
     private static int animFlag = 0;
     private bool finishRotate = true;
     private int lastDir;
+    private Vector2Int oldPosition;
     
 
     private int[] faceNumber = new int[] { 2, 5, 1, 6, 3, 4 };
@@ -66,6 +67,11 @@ public class Dice : MonoBehaviour
     {
         if (MapInfo.Movable(pos.x, pos.y, dir))
         {
+            if (digFlag)
+            {
+                digFlag = false;
+                DigHole(2);
+            }
             lastDir = dir;
             Vector3 rot = -MapInfo.GetRotation(pos.x, pos.y);
             switch (dir)
@@ -102,6 +108,11 @@ public class Dice : MonoBehaviour
     {
         if (MapInfo.Movable(pos.x, pos.y, dir))
         {
+            if (digFlag)
+            {
+                digFlag = false;
+                DigHole(2);
+            }
             Vector3 rot = -MapInfo.GetRotation(pos.x, pos.y);
             switch (dir)
             {
@@ -130,6 +141,7 @@ public class Dice : MonoBehaviour
         if (type == 0)
         {
             digFlag = true;
+            oldPosition = pos;
         }
         else if (type == 1)
         {
@@ -137,23 +149,7 @@ public class Dice : MonoBehaviour
         }
         else if (type == 2)
         {
-            Vector2Int p = pos;
-            switch (lastDir)
-            {
-                case 0:
-                    p -= Vector2Int.left;
-                    break;
-                case 1:
-                    p -= Vector2Int.right;
-                    break;
-                case 2:
-                    p -= Vector2Int.down;
-                    break;
-                case 3:
-                    p -= Vector2Int.up;
-                    break;
-            }
-            MapInfo.DestoyTile(p.x, p.y);
+            MapInfo.DestroyTile(oldPosition.x, oldPosition.y);
         }
     }
 

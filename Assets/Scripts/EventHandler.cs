@@ -27,12 +27,6 @@ public class EventHandler : MonoBehaviour
             return;
         }
 
-        if (dice.digFlag)
-        {
-            dice.digFlag = false;
-            dice.DigHole(2);
-        }
-
         if (dice.onHole)
         {
             dice.FallDown();
