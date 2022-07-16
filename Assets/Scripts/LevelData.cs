@@ -6,8 +6,18 @@ public class LevelData : MonoBehaviour
 {
     public int id;
 
+    private static bool exist = false;
+
     private void Start()
     {
-        DontDestroyOnLoad(gameObject);
+        if (!exist)
+        {
+            exist = true;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 }

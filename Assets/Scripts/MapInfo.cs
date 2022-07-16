@@ -12,14 +12,14 @@ public class MapInfo : MonoBehaviour
     public static Vector2Int mapSize;
     public static Vector2Int target;
     public static GameObject[,] tiles;
-    public static Vector3[,] slopePositionBias = new Vector3[4, 2]
+    private static Vector3[,] slopePositionBias = new Vector3[4, 2]
     {
         {new Vector3(-0.3f, 0f, 0f), new Vector3(-0.5f, -0.1f, 0f)},
         {new Vector3(0.3f, 0f, 0f), new Vector3(0.5f, -0.1f, 0f)},
         {new Vector3(0f, 0f, 0.3f), new Vector3(0f, -0.1f, 0.5f)},
         {new Vector3(0f, 0f, -0.3f), new Vector3(0f, -0.1f, -0.5f)}
     };
-    public static Vector3[,] slopeRotationBias = new Vector3[4, 2]
+    private static Vector3[,] slopeRotationBias = new Vector3[4, 2]
     {
         {new Vector3(0f, 0f, 15f), new Vector3(0f, 0f, 30f)},
         {new Vector3(0f, 0f, -15f), new Vector3(0f, 0f, -30f)},
@@ -62,7 +62,7 @@ public class MapInfo : MonoBehaviour
         return target.x == i && target.y == j;
     }
 
-    public static int GetSlopeCode(int i, int j)
+    private static int GetSlopeCode(int i, int j)
     {
         if (mapInfo[i, j] <= 8) return 0;
         if (mapInfo[i, j] <= 10) return 3;

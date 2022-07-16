@@ -15,7 +15,7 @@ public class CameraFollow : MonoBehaviour
 	
 	private RectTransform wasdRect;
 	
-	public void ResetPosition(GameObject cplayer)
+	private void ResetPosition(GameObject cplayer)
 	{
 		if (cplayer != null)
 		{
