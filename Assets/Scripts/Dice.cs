@@ -100,40 +100,35 @@ public class Dice : MonoBehaviour
             MoveAnimation(MapInfo.GetPosition(pos.x, pos.y));
             rotate = MapInfo.GetRotation(pos.x, pos.y) + rot;
             finishRotate = false;
-            Debug.Log(pos.x + ", " + pos.y);
         }
     }
     
     private void Move(int dir)
     {
-        if (MapInfo.Movable(pos.x, pos.y, dir))
+        if (digFlag)
         {
-            if (digFlag)
-            {
-                digFlag = false;
-                DigHole(2);
-            }
-            Vector3 rot = -MapInfo.GetRotation(pos.x, pos.y);
-            switch (dir)
-            {
-                case 0:
-                    pos += Vector2Int.left;
-                    break;
-                case 1:
-                    pos += Vector2Int.right;
-                    break;
-                case 2:
-                    pos += Vector2Int.down;
-                    break;
-                case 3:
-                    pos += Vector2Int.up;
-                    break;
-            }
-            MoveAnimation(MapInfo.GetPosition(pos.x, pos.y));
-            rotate = MapInfo.GetRotation(pos.x, pos.y) + rot;
-            finishRotate = false;
-            Debug.Log(pos.x + ", " + pos.y);
+            digFlag = false;
+            DigHole(2);
         }
+        Vector3 rot = -MapInfo.GetRotation(pos.x, pos.y);
+        switch (dir)
+        {
+            case 0:
+                pos += Vector2Int.left;
+                break;
+            case 1:
+                pos += Vector2Int.right;
+                break;
+            case 2:
+                pos += Vector2Int.down;
+                break;
+            case 3:
+                pos += Vector2Int.up;
+                break;
+        }
+        MoveAnimation(MapInfo.GetPosition(pos.x, pos.y));
+        rotate = MapInfo.GetRotation(pos.x, pos.y) + rot;
+        finishRotate = false;
     }
     
     public void DigHole(int type)
