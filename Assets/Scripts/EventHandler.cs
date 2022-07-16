@@ -24,6 +24,11 @@ public class EventHandler : MonoBehaviour
         dice.onCrack = MapInfo.IsCrack(dice.pos.x, dice.pos.y);
         dice.onHole = MapInfo.IsHole(dice.pos.x, dice.pos.y);
 
+        if (dice.onWater)
+        {
+            AudioController.PlaySwim();
+        }
+
         if (MapInfo.IsTarget(dice.pos.x, dice.pos.y))
         {
             dice.Victory();
