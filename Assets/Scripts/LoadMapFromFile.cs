@@ -84,6 +84,7 @@ public class LoadMapFromFile : MonoBehaviour
                 else
                 {
                     MapInfo.mapInfo[i, j] = 15;
+                    MapInfo.hole[i, j] = 2;
                 }
             }
         }
@@ -108,7 +109,7 @@ public class LoadMapFromFile : MonoBehaviour
         EventHandler.dieMenu = dieMenu;
         Dice.ResetFlag();
         GameObject levelTransfer = GameObject.Find("LevelObject");
-        int level = 0;
+        int level = 6;
         if (levelTransfer != null)
         {
             level = levelTransfer.GetComponent<LevelData>().id;

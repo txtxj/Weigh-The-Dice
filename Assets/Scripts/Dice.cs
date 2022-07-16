@@ -171,7 +171,6 @@ public class Dice : MonoBehaviour
 
     public void GameOver()
     {
-        dieAnimFlag += 1;
         if (isLocalPlayer)
         {
             EventHandler.GameOver();
