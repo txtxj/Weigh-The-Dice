@@ -1,13 +1,19 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Build.Content;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LoadMapFromFile : MonoBehaviour
 {
     public GameObject[] gameAsserts;
     [HideInInspector]
     public int assetsNumber;
+
+    private TextAsset levelText;
+    private TextAsset rotateTex;
+    private Vector2Int size;
 
     private void CreateBlock(int x, int y, int index, int forward)
     {
@@ -32,7 +38,7 @@ public class LoadMapFromFile : MonoBehaviour
 
     private void BuildMap(byte[] s, byte[] r)
     {
-        Vector2Int size = new Vector2Int(s[1], s[0]);
+        size = new Vector2Int(s[1], s[0]);
         MapInfo.target = new Vector2Int(r[0], r[1]);
         MapInfo.mapSize = size;
         MapInfo.mapInfo = new int[size.y, size.x];
@@ -67,17 +73,22 @@ public class LoadMapFromFile : MonoBehaviour
         }
     }
 
+    public void Retry()
+    {
+        SceneManager.LoadScene(1);
+    }
+
     private void Awake()
     {
         assetsNumber = gameAsserts.Length;
-        GameObject levelTransfer = GameObject.Find("LevelTransfer");
+        GameObject levelTransfer = GameObject.Find("LevelObject");
         int level = 0;
         if (levelTransfer != null)
         {
             level = levelTransfer.GetComponent<LevelData>().id;
         }
-        TextAsset levelText = Resources.Load<TextAsset>("Levels/level" + level);
-        TextAsset rotateTex = Resources.Load<TextAsset>("Levels/rotate" + level);
+        levelText = Resources.Load<TextAsset>("Levels/" + level + "/level");
+        rotateTex = Resources.Load<TextAsset>("Levels/" + level + "/rotate");
         BuildMap(levelText.bytes, rotateTex.bytes);
     }
 }
