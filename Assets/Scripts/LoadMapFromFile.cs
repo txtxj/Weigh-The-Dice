@@ -9,6 +9,9 @@ public class LoadMapFromFile : MonoBehaviour
 {
     public GameObject dice;
     public GameObject[] gameAsserts;
+    public GameObject winMenu;
+    public GameObject dieMenu;
+    
     [HideInInspector]
     public int assetsNumber;
 
@@ -86,17 +89,30 @@ public class LoadMapFromFile : MonoBehaviour
         SceneManager.LoadScene(1);
     }
 
+    public void Next()
+    {
+        GameObject levelTransfer = GameObject.Find("LevelObject");
+        levelTransfer.GetComponent<LevelData>().id += 1;
+        SceneManager.LoadScene(1);
+    }
+
     private void Awake()
     {
         assetsNumber = gameAsserts.Length;
+        EventHandler.winMenu = winMenu;
+        EventHandler.dieMenu = dieMenu;
         GameObject levelTransfer = GameObject.Find("LevelObject");
-        int level = 1;
+        int level = 0;
         if (levelTransfer != null)
         {
             level = levelTransfer.GetComponent<LevelData>().id;
         }
         levelText = Resources.Load<TextAsset>("Levels/" + level + "/level");
         rotateTex = Resources.Load<TextAsset>("Levels/" + level + "/rotate");
+        if (levelText == null)
+        {
+            SceneManager.LoadScene(0);
+        }
         BuildMap(levelText.bytes, rotateTex.bytes);
     }
 }

@@ -4,14 +4,17 @@ using UnityEngine;
 
 public class EventHandler : MonoBehaviour
 {
-    private static void GameOver()
+    public static GameObject winMenu;
+    public static GameObject dieMenu;
+    
+    public static void GameOver()
     {
-        Debug.Log("Game Over!");
+        dieMenu.SetActive(true);
     }
     
     private static void Victory()
     {
-        Debug.Log("Victory!");
+        winMenu.SetActive(true);
     }
     
     public static void Solve(Dice dice)
@@ -30,14 +33,12 @@ public class EventHandler : MonoBehaviour
         if (dice.onHole)
         {
             dice.FallDown();
-            GameOver();
             return;
         }
         
         if (dice.Number > 2 && dice.onWater)
         {
             dice.Drown();
-            GameOver();
             return;
         }
 

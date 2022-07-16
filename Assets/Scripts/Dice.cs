@@ -26,6 +26,7 @@ public class Dice : MonoBehaviour
     private Vector3 rotate;
     private Quaternion lastRotate;
     private static int animFlag = 0;
+    private static int dieAnimFlag = 0;
     private bool finishRotate = true;
     private int lastDir;
     private Vector2Int oldPosition;
@@ -148,14 +149,36 @@ public class Dice : MonoBehaviour
         }
     }
 
+    public void GameOver()
+    {
+        dieAnimFlag += 1;
+        EventHandler.GameOver();
+    }
+
     public void Drown()
     {
-        
+        dieAnimFlag -= 1;
+        Hashtable hash = new Hashtable();
+        hash.Add("position", transform.position + Vector3.down * 3f);
+        hash.Add("time", 0.5f);
+        hash.Add("easeType", "easeInQuad");
+        hash.Add("onComplete", "GameOver");
+        iTween.MoveTo(gameObject, hash);
+        hash.Clear();
+        hash.Add("scale", new Vector3(0f, 0f, 0f));
+        hash.Add("time", 0.5f);
+        hash.Add("easeType", "easeInQuad");
+        iTween.ScaleTo(gameObject, hash);
     }
 
     public void FallDown()
     {
-        
+        Hashtable hash = new Hashtable();
+        hash.Add("position", transform.position + Vector3.down * 80f);
+        hash.Add("time", 2f);
+        hash.Add("easeType", "easeInQuad");
+        hash.Add("onComplete", "GameOver");
+        iTween.MoveTo(gameObject, hash);
     }
 
     public void Landslide()
@@ -212,7 +235,7 @@ public class Dice : MonoBehaviour
 
     private void Update()
     {
-        if (animFlag < 0) return;
+        if (animFlag < 0 || dieAnimFlag < 0) return;
         float hr = Input.GetAxisRaw("Horizontal");
         float vr = Input.GetAxisRaw("Vertical");
 
