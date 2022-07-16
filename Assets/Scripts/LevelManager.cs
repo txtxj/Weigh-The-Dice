@@ -10,7 +10,7 @@ public class LevelManager : MonoBehaviour
 
 	public int levelCount = 16;
 
-	private ButtonManager btManager;
+	private ButtonManager btManager; 
 
 	private void Start()
 	{

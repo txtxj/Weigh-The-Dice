@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class LoadMapFromFile : MonoBehaviour
 {
+    public GameObject dice;
     public GameObject[] gameAsserts;
     [HideInInspector]
     public int assetsNumber;
@@ -14,6 +15,7 @@ public class LoadMapFromFile : MonoBehaviour
     private TextAsset levelText;
     private TextAsset rotateTex;
     private Vector2Int size;
+    private Vector2Int ori;
 
     private void CreateBlock(int x, int y, int index, int forward)
     {
@@ -34,11 +36,17 @@ public class LoadMapFromFile : MonoBehaviour
                 break;
         }
         MapInfo.tiles[x, y] = Instantiate(gameAsserts[index], new Vector3(x, 0f, y) * 2, q, transform);
+        if (MapInfo.IsTarget(x, y))
+        {
+            MapInfo.tiles[x, y].GetComponent<Renderer>().materials[1].SetColor("_Color", (Color)new Color32(0xff, 0x2c, 0x60, 0xff));
+        }
     }
 
     private void BuildMap(byte[] s, byte[] r)
     {
         size = new Vector2Int(s[1], s[0]);
+        ori = new Vector2Int(s[2], s[3]);
+        dice.GetComponent<Dice>().pos = ori;
         MapInfo.target = new Vector2Int(r[0], r[1]);
         MapInfo.mapSize = size;
         MapInfo.mapInfo = new int[size.y, size.x];
@@ -49,7 +57,7 @@ public class LoadMapFromFile : MonoBehaviour
         {
             for (int j = 0; j < size.x; j++)
             {
-                int u = s[i * size.x + j + 2];
+                int u = s[i * size.x + j + 4];
                 int v = r[i * size.x + j + 2];
                 if (u < assetsNumber)
                 {
@@ -82,7 +90,7 @@ public class LoadMapFromFile : MonoBehaviour
     {
         assetsNumber = gameAsserts.Length;
         GameObject levelTransfer = GameObject.Find("LevelObject");
-        int level = 0;
+        int level = 1;
         if (levelTransfer != null)
         {
             level = levelTransfer.GetComponent<LevelData>().id;

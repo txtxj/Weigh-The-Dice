@@ -374,6 +374,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96210276596c1834b8fbf856be9a2ef4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dice: {fileID: 1566638567}
   gameAsserts:
   - {fileID: 919132149155446097, guid: dd18413b99463b4429d5ae20a516e7fe, type: 3}
   - {fileID: 919132149155446097, guid: 6f8423b41de1f2a48a01e3575a14a0b5, type: 3}
