@@ -448,3 +448,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pos: {x: 0, y: 0}
   headNumber: 0
+  moveTime: 0.25

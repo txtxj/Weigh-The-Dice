@@ -16,12 +16,12 @@ public class MapInfo : MonoBehaviour
         {new Vector3(0f, 0f, 0.3f), new Vector3(0f, -0.1f, 0.5f)},
         {new Vector3(0f, 0f, -0.3f), new Vector3(0f, -0.1f, -0.5f)}
     };
-    public static Quaternion[,] slopeRotationBias = new Quaternion[4, 2]
+    public static Vector3[,] slopeRotationBias = new Vector3[4, 2]
     {
-        {Quaternion.Euler(0f, 0f, 15f), Quaternion.Euler(0f, 0f, 30f)},
-        {Quaternion.Euler(0f, 0f, -15f), Quaternion.Euler(0f, 0f, -30f)},
-        {Quaternion.Euler(15f, 0f, 0f), Quaternion.Euler(30f, 0f, 0f)},
-        {Quaternion.Euler(-15f, 0f, 0f), Quaternion.Euler(-30f, 0f, 0f)},
+        {new Vector3(0f, 0f, 15f), new Vector3(0f, 0f, 30f)},
+        {new Vector3(0f, 0f, -15f), new Vector3(0f, 0f, -30f)},
+        {new Vector3(15f, 0f, 0f), new Vector3(30f, 0f, 0f)},
+        {new Vector3(-15f, 0f, 0f), new Vector3(-30f, 0f, 0f)},
     };
 
     public static int GetHeight(int i, int j)
@@ -115,9 +115,9 @@ public class MapInfo : MonoBehaviour
         return new Vector3(i * 2f, 1.5f + h * 0.5f, j * 2f) + pos;
     }
 
-    public static Quaternion GetRotation(int i, int j)
+    public static Vector3 GetRotation(int i, int j)
     {
-        Quaternion q = Quaternion.identity;
+        Vector3 q = Vector3.zero;
         if (IsSlope(i, j))
         {
             int code = GetSlopeCode(i, j);
