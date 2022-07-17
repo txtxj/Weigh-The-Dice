@@ -7,6 +7,7 @@ public class Dice : MonoBehaviour
     public float moveTime;
 
     public int Number => faceNumber[0];
+    public int FaceNumber => faceNumber[2];
     [HideInInspector]
     public bool onWater = false;
     [HideInInspector]
