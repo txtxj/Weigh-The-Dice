@@ -11,7 +11,7 @@ public class CameraFollow : MonoBehaviour
 	public int playerStress = 4;
 
 	public Vector3 dir = new Vector3(-5f, 12f, -5f);
-	public Vector3 rot = new Vector3(0f, 0f, 40f);
+	public Vector3 rot = new Vector3(0f, 0f, 35f);
 	
 	private RectTransform wasdRect;
 	
