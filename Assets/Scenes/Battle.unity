@@ -2166,9 +2166,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   teachVideo:
-  - {fileID: 32900000, guid: 73c1f1343f2f00644be374aff89213fc, type: 3}
-  - {fileID: 32900000, guid: aeead9c3f65a68b45b0334490ea9a21a, type: 3}
-  - {fileID: 32900000, guid: 337568eaa1f34e447953ccef0c2c53af, type: 3}
+  - 
+  - 
+  - 
   playLevel: 030000000200000005000000
   videoObject: {fileID: 417597135}
 --- !u!114 &1253411975
@@ -3069,6 +3069,25 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: d93a7b04f4e6310458004cd014d1561f, type: 3}
   m_PrefabInstance: {fileID: 1759239548}
   m_PrefabAsset: {fileID: 0}
+--- !u!95 &1759239553
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1759239549}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: bcc76acee84196848961ef04e1faea2d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1828559857
 GameObject:
   m_ObjectHideFlags: 0
