@@ -8,7 +8,7 @@ public class LevelManager : MonoBehaviour
 {
 	public GameObject levelButtonPrefab;
 
-	public int levelCount = 16;
+	public int levelCount = 9;
 
 	private ButtonManager btManager; 
 
@@ -24,7 +24,7 @@ public class LevelManager : MonoBehaviour
 				return;
 			}
 			GameObject bt = Instantiate(levelButtonPrefab, transform);
-			bt.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(-120f + 80f * column, 120f - 80f * row, 0f);
+			bt.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(-120f + 120f * column, 120f - 120f * row, 0f);
 			bt.GetComponentInChildren<Text>().text = id.ToString();
 			bt.name = id.ToString();
 			bt.GetComponent<Button>().onClick.AddListener(delegate
@@ -32,8 +32,8 @@ public class LevelManager : MonoBehaviour
 				btManager.LoadLevel(Int32.Parse(bt.name));
 			});
 			column += 1;
-			row += column / 4;
-			column %= 4;
+			row += column / 3;
+			column %= 3;
 		}
 	}
 }
