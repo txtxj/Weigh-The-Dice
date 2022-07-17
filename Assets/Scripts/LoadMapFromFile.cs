@@ -109,7 +109,7 @@ public class LoadMapFromFile : MonoBehaviour
         EventHandler.dieMenu = dieMenu;
         Dice.ResetFlag();
         GameObject levelTransfer = GameObject.Find("LevelObject");
-        int level = 6;
+        int level = 99;
         if (levelTransfer != null)
         {
             level = levelTransfer.GetComponent<LevelData>().id;

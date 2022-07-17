@@ -8,6 +8,8 @@ public class LevelData : MonoBehaviour
 
     private static bool exist = false;
 
+    public static bool[] played = new bool[3]{false, false, false};
+
     private void Start()
     {
         if (!exist)

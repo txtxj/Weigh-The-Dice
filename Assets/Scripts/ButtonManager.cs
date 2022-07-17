@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class ButtonManager : MonoBehaviour
 {
 	public GameObject levelMenu;
+	public GameObject videoMenu;
     
 	public void GameQuit()
 	{
@@ -21,6 +22,11 @@ public class ButtonManager : MonoBehaviour
 	{
 		levelMenu.SetActive(false);
 	}
+	public void HideVideoMenu()
+	{
+		videoMenu.SetActive(false);
+	}
+	
 
 	public void LoadLevel(int id)
 	{
