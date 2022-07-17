@@ -322,7 +322,7 @@ VideoPlayer:
   m_TargetMaterialProperty: _MainTex
   m_RenderMode: 2
   m_AspectRatio: 2
-  m_DataSource: 0
+  m_DataSource: 1
   m_PlaybackSpeed: 1
   m_AudioOutputMode: 2
   m_TargetAudioSources:
@@ -624,6 +624,7 @@ GameObject:
   - component: {fileID: 227692388}
   - component: {fileID: 227692389}
   - component: {fileID: 227692390}
+  - component: {fileID: 227692391}
   m_Layer: 5
   m_Name: VideoController
   m_TagString: Untagged
@@ -668,7 +669,7 @@ VideoPlayer:
   m_TargetMaterialProperty: _MainTex
   m_RenderMode: 2
   m_AspectRatio: 2
-  m_DataSource: 0
+  m_DataSource: 1
   m_PlaybackSpeed: 0.8
   m_AudioOutputMode: 2
   m_TargetAudioSources:
@@ -720,6 +721,18 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
+--- !u!114 &227692391
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 227692386}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6ec584f04908b747be587c7d779cecf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &274599613
 GameObject:
   m_ObjectHideFlags: 0
@@ -2869,9 +2882,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   guideClips:
-  - {fileID: 32900000, guid: 73c1f1343f2f00644be374aff89213fc, type: 3}
-  - {fileID: 32900000, guid: aeead9c3f65a68b45b0334490ea9a21a, type: 3}
-  - {fileID: 32900000, guid: 337568eaa1f34e447953ccef0c2c53af, type: 3}
+  - 
+  - 
+  - 
   videoObject: {fileID: 50535178}
 --- !u!1 &1738763929
 GameObject:
