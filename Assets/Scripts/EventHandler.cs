@@ -26,7 +26,7 @@ public class EventHandler : MonoBehaviour
 
         if (dice.onWater)
         {
-            AudioController.PlaySwim();
+            GameObject.Find("EventSystem").GetComponent<AudioController>().PlaySwim();
         }
 
         if (MapInfo.IsTarget(dice.pos.x, dice.pos.y))

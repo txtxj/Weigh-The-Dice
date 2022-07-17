@@ -8,29 +8,23 @@ public class AudioController : MonoBehaviour
     public AudioClip[] swimming;
 
     private int levelBGMIndex = 0;
-    private static AudioSource swimmingSource;
-    private static AudioClip[] swimmingStatic;
+    private AudioSource swimmingSource;
 
     private void Start()
     {
+        swimmingSource = GameObject.Find("dice").GetComponent<AudioSource>();
+        swimmingSource.loop = false;
         GameObject obj = GameObject.Find("LevelObject");
         levelBGMIndex = obj.GetComponent<LevelData>().id % levelBGM.Length;
         if (obj.GetComponent<AudioSource>().clip == levelBGM[levelBGMIndex] && obj.GetComponent<AudioSource>().isPlaying) return;
         obj.GetComponent<AudioSource>().clip = levelBGM[levelBGMIndex];
         obj.GetComponent<AudioSource>().Play();
-        swimmingSource = GameObject.Find("dice").GetComponent<AudioSource>();
-        swimmingSource.loop = false;
-        swimmingStatic = swimming;
     }
 
-    public static void PlaySwim()
+    public void PlaySwim()
     {
-        if (swimmingSource == null)
-        {
-            swimmingSource = GameObject.Find("dice").GetComponent<AudioSource>();
-        }
         if (swimmingSource.isPlaying) return;
-        swimmingSource.clip = swimmingStatic[Random.Range(0, swimmingStatic.Length)];
+        swimmingSource.clip = swimming[Random.Range(0, swimming.Length)];
         swimmingSource.Play();
     }
 }
