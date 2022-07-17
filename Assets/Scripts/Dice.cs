@@ -161,6 +161,7 @@ public class Dice : MonoBehaviour
     {
         if (isLocalPlayer)
         {
+            dieAnimFlag -= 1;
             EventHandler.Victory();
         }
     }
