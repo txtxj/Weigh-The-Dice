@@ -119,4 +119,12 @@ public class LoadMapFromFile : MonoBehaviour
         }
         BuildMap(levelText.bytes, rotateTex.bytes);
     }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            Retry();
+        }
+    }
 }

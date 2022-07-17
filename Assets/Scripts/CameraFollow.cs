@@ -36,7 +36,7 @@ public class CameraFollow : MonoBehaviour
 
 	private void Update()
 	{
-		if (Input.GetMouseButtonDown(1))
+		if (Input.GetMouseButtonDown(1) || Input.GetKeyDown(KeyCode.V))
 		{
 			dir.x *= -1;
 			rot.z *= -1;

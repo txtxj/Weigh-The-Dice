@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Dice : MonoBehaviour
 {
@@ -28,6 +29,7 @@ public class Dice : MonoBehaviour
     private static int animFlag = 0;
     private static int solverFlag = 0;
     private static int dieAnimFlag = 0;
+    private static int vicFlag = 0;
     private bool finishRotate = true;
     private int lastDir;
     private Vector2Int oldPosition;
@@ -37,7 +39,7 @@ public class Dice : MonoBehaviour
 
     public static void ResetFlag()
     {
-        animFlag = solverFlag = dieAnimFlag = 0;
+        animFlag = solverFlag = dieAnimFlag = vicFlag = 0;
     }
 
     public void SignalFlag()
@@ -161,7 +163,7 @@ public class Dice : MonoBehaviour
     {
         if (isLocalPlayer)
         {
-            dieAnimFlag -= 1;
+            vicFlag -= 1;
             EventHandler.Victory();
         }
     }
@@ -255,7 +257,13 @@ public class Dice : MonoBehaviour
             lastRotate = transform.rotation;
             SignalFlag();
         }
-        if (animFlag < 0 || dieAnimFlag < 0 || solverFlag < 0) return;
+        if (vicFlag < 0 && Input.GetKeyDown(KeyCode.N))
+        {
+            GameObject levelTransfer = GameObject.Find("LevelObject");
+            levelTransfer.GetComponent<LevelData>().id += 1;
+            SceneManager.LoadScene(1);
+        }
+        if (animFlag < 0 || dieAnimFlag < 0 || solverFlag < 0 || vicFlag < 0) return;
         if (onWater)
         {
             transform.position = MapInfo.GetPosition(pos.x, pos.y) + new Vector3(0f, onWaterOffset, 0f);
