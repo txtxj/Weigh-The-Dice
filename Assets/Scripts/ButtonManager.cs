@@ -7,6 +7,7 @@ public class ButtonManager : MonoBehaviour
 {
 	public GameObject levelMenu;
 	public GameObject videoMenu;
+	public GameObject helpMenu;
     
 	public void GameQuit()
 	{
@@ -17,6 +18,11 @@ public class ButtonManager : MonoBehaviour
 	{
 		levelMenu.SetActive(true);
 	}
+	
+	public void ShowHelpMenu()
+	{
+		helpMenu.SetActive(true);
+	}
 
 	public void HideLevelMenu()
 	{
@@ -26,7 +32,11 @@ public class ButtonManager : MonoBehaviour
 	{
 		videoMenu.SetActive(false);
 	}
-	
+
+	public void HideHelpMenu()
+	{
+		helpMenu.SetActive(false);
+	}
 
 	public void LoadLevel(int id)
 	{
