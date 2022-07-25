@@ -1,4 +1,5 @@
 # WeighTheDice
+
 GMTK 2022 Entry
 
 **Rate this game**: https://itch.io/jam/gmtk-jam-2022/rate/1619125
@@ -16,3 +17,8 @@ The weight of the dice is exactly the number at the top of it!
 5 are so heavy that it will break the wasteland(the earthy yellow block).
 
 6 are even heavier so it can also make the grassland become wasteland!
+
+
+---
+
+music: Nooskewl Games (CC0 license)
