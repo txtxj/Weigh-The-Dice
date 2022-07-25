@@ -1,15 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class EventHandler : MonoBehaviour
 {
     public static GameObject winMenu;
-    public static GameObject dieMenu;
     
     public static void GameOver()
     {
-        dieMenu.SetActive(true);
+        SceneManager.LoadScene(1);
     }
     
     public static void Victory()

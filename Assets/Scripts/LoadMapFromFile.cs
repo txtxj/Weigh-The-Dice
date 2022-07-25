@@ -6,7 +6,6 @@ public class LoadMapFromFile : MonoBehaviour
     public GameObject dice;
     public GameObject[] gameAsserts;
     public GameObject winMenu;
-    public GameObject dieMenu;
     
     [HideInInspector]
     public int assetsNumber;
@@ -102,7 +101,6 @@ public class LoadMapFromFile : MonoBehaviour
     {
         assetsNumber = gameAsserts.Length;
         EventHandler.winMenu = winMenu;
-        EventHandler.dieMenu = dieMenu;
         Dice.ResetFlag();
         GameObject levelTransfer = GameObject.Find("LevelObject");
         int level = 99;
