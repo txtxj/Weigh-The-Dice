@@ -4,6 +4,8 @@ GMTK 2022 Entry
 
 **Rate this game**: https://itch.io/jam/gmtk-jam-2022/rate/1619125
 
+**Watch the video**: https://www.bilibili.com/video/BV1yd4y1Q7VA
+
 ---
 
 **Description**:
